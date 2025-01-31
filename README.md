@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <a href="https://particle.network/">
+    <img src="https://i.imgur.com/xmdzXU4.png" />
+  </a>
+  <h3>
+ @particle-network/authkit custom email login Demo Application 
+  </h3>
+</div>
 
-## Getting Started
+# Particle Auth Custom Email Login
 
-First, run the development server:
+⚡️ Basic demo application using `@particle-network/authkit` to showcase how to implement custom email login, request and verify the OTP code.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+👉 Learn more about [Particle Auth](https://developers.particle.network/api-reference/auth/desktop-sdks/web).
+
+***
+
+👉 Learn more about [Particle Network](https://particle.network).
+
+## 🛠️ Quickstart
+
+### Clone this repository
+```
+git clone https://github.com/soos3d/particle-auth-nextjs-aa
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Move into the app directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cd connectkit-aa-usage
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Install dependencies
 
-## Learn More
+```sh
+yarn install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Or
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Set environment variables
+This project requires several keys from Particle Network to be defined in `.env`. The following should be defined:
+- `NEXT_PUBLIC_PROJECT_ID`, the ID of the corresponding application in your [Particle Network dashboard](https://dashboard.particle.network/#/applications).
+- `NEXT_PUBLIC_CLIENT_KEY`, the ID of the corresponding project in your [Particle Network dashboard](https://dashboard.particle.network/#/applications).
+- `NEXT_PUBLIC_APP_ID`, the client key of the corresponding project in your [Particle Network dashboard](https://dashboard.particle.network/#/applications).
 
-## Deploy on Vercel
+### Start the project
+```sh
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Or
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+yarn dev
+```
+
+## Development
+
+Particle Auth config is in `src/authkit.tsx`. 
+
+### Config custom email login
+
+**Step 1: Request an OTP**
+
+Use the `getConnectCaptcha()` function from `@particle-network/auth-core` to send an **OTP** to the user’s email.
+
+```tsx page.tsx
+import { getConnectCaptcha } from "@particle-network/auth-core";
+
+// Send an OTP to the email
+const sendOtpRequest = async (email) => {
+  const success = await getConnectCaptcha({ email });
+  console.log(success ? "OTP sent successfully!" : "Failed to request OTP. Try again.");
+};
+```
+
+**Step 2: Verify OTP & Log In**
+
+Once the user receives the OTP, use the `connect()` function, including OTP and email within `loginParams`, to verify it and complete the login.
+
+```tsx page.tsx
+import { ConnectWithEmailParam } from "@particle-network/auth-core";
+
+// Verify the OTP and log in
+const verifyOtp = async (email, otp) => {
+    const loginParams: ConnectWithEmailParam = { email, code: otp };
+    await connect(loginParams);
+    console.log("Login successful!");
+};
+```
