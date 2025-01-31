@@ -14,8 +14,6 @@
 
 👉 Learn more about [Particle Auth](https://developers.particle.network/api-reference/auth/desktop-sdks/web).
 
-***
-
 👉 Learn more about [Particle Network](https://particle.network).
 
 ## 🛠️ Quickstart
