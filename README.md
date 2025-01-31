@@ -20,7 +20,7 @@
 
 ### Clone this repository
 ```
-git clone https://github.com/soos3d/particle-auth-nextjs-aa
+git clone https://github.com/Particle-Network/particle-auth-custom-email-otp-demo
 ```
 
 ### Move into the app directory
@@ -60,7 +60,7 @@ yarn dev
 
 ## Development
 
-Particle Auth config is in `src/authkit.tsx`. 
+Start from `app/page.tsx`.
 
 ### Config custom email login
 
